@@ -8,6 +8,10 @@ public class AccountDTO {
     private String name;
     private String gender;
     private String phone;
+    /** 所属部门ID（任务二：用户-部门关联，可空） */
+    private Long departmentId;
+    /** 所属部门名称（任务二：后端关联查询回显，只读） */
+    private String departmentName;
     private String password;
     private Integer roleLevel;
     private Integer status;
@@ -31,6 +35,12 @@ public class AccountDTO {
 
     public String getPhone() { return phone; }
     public void setPhone(String phone) { this.phone = phone; }
+
+    public Long getDepartmentId() { return departmentId; }
+    public void setDepartmentId(Long departmentId) { this.departmentId = departmentId; }
+
+    public String getDepartmentName() { return departmentName; }
+    public void setDepartmentName(String departmentName) { this.departmentName = departmentName; }
 
     public String getPassword() { return password; }
     public void setPassword(String password) { this.password = password; }
