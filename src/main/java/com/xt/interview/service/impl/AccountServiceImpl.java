@@ -28,8 +28,6 @@ public class AccountServiceImpl implements AccountService {
 
     private static final String DEFAULT_PASSWORD = "123456";
 
-    private static final String PHONE_PATTERN = "^1\\d{10}$";
-
     @Autowired
     private AccountRepository accountRepository;
 
@@ -38,7 +36,6 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public AccountDTO createAccount(AccountDTO dto) {
-        validatePhone(dto.getPhone());
         if (accountRepository.existsByUsernameAndDeleted(dto.getUsername(), NOT_DELETED)) {
             throw new BusinessException("用户名已存在");
         }
@@ -61,7 +58,6 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public AccountDTO updateAccount(Long id, AccountDTO dto) {
-        validatePhone(dto.getPhone());
         Account account = accountRepository.findByIdAndDeleted(id, NOT_DELETED)
                 .orElseThrow(() -> new BusinessException("账号不存在"));
 
@@ -163,12 +159,6 @@ public class AccountServiceImpl implements AccountService {
         dto.setCreateTime(account.getCreateTime());
         dto.setUpdateTime(account.getUpdateTime());
         return dto;
-    }
-
-    private void validatePhone(String phone) {
-        if (phone != null && !phone.isBlank() && !phone.matches(PHONE_PATTERN)) {
-            throw new BusinessException("手机号格式不正确，应为1开头的11位数字");
-        }
     }
 
     /** 查询部门名称用于列表回显（任务二），部门不存在或已删除时返回 null */

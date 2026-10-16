@@ -2,6 +2,7 @@ package com.xt.interview.controller;
 
 import com.xt.interview.dto.DepartmentDTO;
 import com.xt.interview.service.DepartmentService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -45,25 +46,25 @@ public class DepartmentController {
     }
 
     /**
-     * 创建部门
+     * 创建部门，@Valid 触发 DTO 上的长度校验
      *
      * @param dto 部门信息
      * @return 创建后的部门信息
      */
     @PostMapping
-    public ResponseEntity<DepartmentDTO> create(@RequestBody DepartmentDTO dto) {
+    public ResponseEntity<DepartmentDTO> create(@Valid @RequestBody DepartmentDTO dto) {
         return ResponseEntity.ok(departmentService.createDepartment(dto));
     }
 
     /**
-     * 更新部门
+     * 更新部门，@Valid 触发 DTO 上的长度校验
      *
      * @param id  部门ID
      * @param dto 部门信息
      * @return 更新后的部门信息
      */
     @PutMapping("/{id}")
-    public ResponseEntity<DepartmentDTO> update(@PathVariable Long id, @RequestBody DepartmentDTO dto) {
+    public ResponseEntity<DepartmentDTO> update(@PathVariable Long id, @Valid @RequestBody DepartmentDTO dto) {
         return ResponseEntity.ok(departmentService.updateDepartment(id, dto));
     }
 

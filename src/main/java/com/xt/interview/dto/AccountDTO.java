@@ -1,12 +1,21 @@
 package com.xt.interview.dto;
 
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+
 import java.time.LocalDateTime;
 
 public class AccountDTO {
     private Long id;
+    /** 用户名，最长50字符，对应 sys_account.username VARCHAR(50) */
+    @Size(max = 50, message = "用户名长度不能超过50个字符")
     private String username;
+    /** 姓名，最长100字符，对应 sys_account.name VARCHAR(100) */
+    @Size(max = 100, message = "姓名长度不能超过100个字符")
     private String name;
     private String gender;
+    /** 手机号：1开头的11位数字，可空（^$ 放行空字符串） */
+    @Pattern(regexp = "^$|^1\\d{10}$", message = "手机号需为1开头的11位数字")
     private String phone;
     /** 所属部门ID（任务二：用户-部门关联，可空） */
     private Long departmentId;

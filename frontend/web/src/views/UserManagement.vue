@@ -106,10 +106,10 @@
         label-width="90px"
       >
         <el-form-item label="用户名" prop="username">
-          <el-input v-model="formData.username" placeholder="请输入用户名" />
+          <el-input v-model="formData.username" placeholder="请输入用户名" maxlength="50" show-word-limit />
         </el-form-item>
         <el-form-item label="姓名" prop="name">
-          <el-input v-model="formData.name" placeholder="请输入姓名" />
+          <el-input v-model="formData.name" placeholder="请输入姓名" maxlength="100" show-word-limit />
         </el-form-item>
         <el-form-item label="性别" prop="gender">
           <el-select v-model="formData.gender" placeholder="请选择性别" style="width: 100%">
@@ -210,8 +210,14 @@ const formData = reactive({
 })
 
 const formRules: FormRules = {
-  username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
-  name: [{ required: true, message: '请输入姓名', trigger: 'blur' }],
+  username: [
+    { required: true, message: '请输入用户名', trigger: 'blur' },
+    { max: 50, message: '用户名不能超过50个字符', trigger: 'blur' }
+  ],
+  name: [
+    { required: true, message: '请输入姓名', trigger: 'blur' },
+    { max: 100, message: '姓名不能超过100个字符', trigger: 'blur' }
+  ],
   phone: [
     { pattern: /^1\d{10}$/, message: '手机号需为1开头的11位数字', trigger: 'blur' }
   ],
@@ -337,6 +343,10 @@ async function handleSubmit() {
       }
       if (data.departmentId === '' || data.departmentId === undefined) {
         data.departmentId = null
+      }
+      // 手机号为可选字段，空字符串转 null，避免后端 @Pattern 校验空串
+      if (data.phone === '') {
+        data.phone = null
       }
 
       if (isEdit.value) {

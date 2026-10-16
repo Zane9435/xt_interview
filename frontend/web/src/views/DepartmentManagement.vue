@@ -54,10 +54,10 @@
         label-width="90px"
       >
         <el-form-item label="部门名称" prop="name">
-          <el-input v-model="formData.name" placeholder="请输入部门名称" />
+          <el-input v-model="formData.name" placeholder="请输入部门名称" maxlength="100" show-word-limit />
         </el-form-item>
         <el-form-item label="部门编码" prop="code">
-          <el-input v-model="formData.code" placeholder="请输入部门编码" />
+          <el-input v-model="formData.code" placeholder="请输入部门编码" maxlength="50" show-word-limit />
         </el-form-item>
         <el-form-item label="部门描述" prop="description">
           <el-input
@@ -111,8 +111,14 @@ const formData = reactive({
 })
 
 const formRules: FormRules = {
-  name: [{ required: true, message: '请输入部门名称', trigger: 'blur' }],
-  code: [{ required: true, message: '请输入部门编码', trigger: 'blur' }],
+  name: [
+    { required: true, message: '请输入部门名称', trigger: 'blur' },
+    { max: 100, message: '部门名称不能超过100个字符', trigger: 'blur' }
+  ],
+  code: [
+    { required: true, message: '请输入部门编码', trigger: 'blur' },
+    { max: 50, message: '部门编码不能超过50个字符', trigger: 'blur' }
+  ],
   status: [{ required: true, message: '请选择状态', trigger: 'change' }]
 }
 

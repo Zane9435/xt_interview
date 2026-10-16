@@ -3,6 +3,7 @@ package com.xt.interview.controller;
 import com.xt.interview.dto.AccountDTO;
 import com.xt.interview.dto.PageResult;
 import com.xt.interview.service.AccountService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -48,13 +49,15 @@ public class AccountController {
         return ResponseEntity.ok(accountService.getPageAccounts(username, status, roleLevel, page, size));
     }
 
+    /** 创建账号（任务二：支持关联部门），@Valid 触发 DTO 上的参数校验 */
     @PostMapping
-    public ResponseEntity<AccountDTO> create(@RequestBody AccountDTO dto) {
+    public ResponseEntity<AccountDTO> create(@Valid @RequestBody AccountDTO dto) {
         return ResponseEntity.ok(accountService.createAccount(dto));
     }
 
+    /** 更新账号（任务二：支持关联部门），@Valid 触发 DTO 上的参数校验 */
     @PutMapping("/{id}")
-    public ResponseEntity<AccountDTO> update(@PathVariable Long id, @RequestBody AccountDTO dto) {
+    public ResponseEntity<AccountDTO> update(@PathVariable Long id, @Valid @RequestBody AccountDTO dto) {
         return ResponseEntity.ok(accountService.updateAccount(id, dto));
     }
 

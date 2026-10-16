@@ -1,5 +1,7 @@
 package com.xt.interview.dto;
 
+import jakarta.validation.constraints.Size;
+
 import java.time.LocalDateTime;
 
 /**
@@ -11,7 +13,11 @@ import java.time.LocalDateTime;
  */
 public class DepartmentDTO {
     private Long id;
+    /** 部门名称，最长100字符，对应 sys_department.name VARCHAR(100) */
+    @Size(max = 100, message = "部门名称长度不能超过100个字符")
     private String name;
+    /** 部门编码，最长50字符，对应 sys_department.code VARCHAR(50) */
+    @Size(max = 50, message = "部门编码长度不能超过50个字符")
     private String code;
     private String description;
     private Integer status;
